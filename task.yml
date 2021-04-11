@@ -1,0 +1,9 @@
+- hosts: namenode
+  roles:
+  -  NameNode
+
+- hosts: datanode
+  roles:
+  -  DataNode 
+
+

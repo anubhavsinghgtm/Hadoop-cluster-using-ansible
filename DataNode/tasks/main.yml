@@ -1,0 +1,37 @@
+
+  - name: 'Hadoop Software'
+    copy:
+      src: "{{ hadoop_software }}"
+      dest: "{{ software_dest }}"
+
+  - name: 'JDK Software'
+    copy:
+      src: "{{ jdk_software }}"
+      dest: "{{ software_dest }}"
+
+  - name: 'JDK Installation'
+    shell: rpm -ivh "{{ jdk_software }}"
+   
+
+  - name: 'Hadoop Installation'
+    shell: rpm -ivh "{{ hadoop_software }}" --force
+
+  - name: 'Copying core-file'
+    template:
+      src: "{{ core_site_src }}"
+      dest: "{{ core_site_dest }}"
+
+  - name: 'Copying HDFS file'
+    template:
+      src: "{{ hdfs_src }}"
+      dest: "{{ hdfs_dest }}"
+
+  - name: "Initializing Datanode"
+    shell: "hadoop-daemon.sh start datanode"
+
+  - name: "Result"
+    shell: "jps"
+    register: output
+
+  - debug:
+     var: output

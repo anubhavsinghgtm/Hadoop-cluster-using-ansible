@@ -1,0 +1,46 @@
+    - name: 'To Upload Hadoop Software'
+      copy:
+        src: "{{ hadoop_software }}"
+        dest: "{{ software_dest }}"
+
+    - name: 'To Upload JDK Software'
+      copy:
+        src: "{{ jdk_software }}"
+        dest: "{{ software_dest }}"
+
+    - name: 'JDK Installation'
+      shell: rpm -ivh "{{ jdk_software }}"
+           
+ 
+    - name: 'Hadoop Installation'
+      shell: rpm -ivh "{{ hadoop_software }}" --force
+       
+
+    - name: 'Creation of a Directory for Namenode'
+      file:
+        state: directory
+        path: "{{ namenode_folder }}"
+
+    - name: 'Copying Core-file'
+      template:
+        src: "{{ core_site_src }}"
+        dest: "{{ core_site_dest }}"
+
+    - name: 'Copying HDFS file...'
+      template:
+        src: "{{ hdfs_src }}"
+        dest: "{{ hdfs_dest }}"
+
+    - name: "Formatting the Directory..."
+      shell: "echo Y | hadoop namenode -format"
+       
+
+    - name: "Initializing namenode"
+      shell: "hadoop-daemon.sh start namenode" 
+
+    - name: "Result"
+      shell: "jps"
+      register: output
+
+    - debug:
+        var: output

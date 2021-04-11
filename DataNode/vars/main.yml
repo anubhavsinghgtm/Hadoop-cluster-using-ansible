@@ -1,0 +1,7 @@
+hadoop_software: "/root/hadoop-1.2.1-1.x86_64.rpm"
+software_dest: "/root"
+jdk_software: "/root/jdk-8u171-linux-x64.rpm"
+core_site_src: "/ansible/task11/DNcore-site.xml"
+core_site_dest: "/etc/hadoop/core-site.xml"
+hdfs_src: "/ansible/task11/DNhdfs.xml"
+hdfs_dest: "/etc/hadoop/hdfs-site.xml"
